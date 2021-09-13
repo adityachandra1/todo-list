@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple Todo's</title>
+  </head>
+  <body>
+    <h1>Minimal To-do List</h1>
+    <!-- The method tells browsers what kind of request to send. In this case, we use POST because we’re sending a POST request.
+The action attribute tells the browser where to send the POST request. In this case, we’re send the POST request to /tasks -->
+    <form action="/tasks" method="POST">
+      <input type="text" placeholder="Task" name="name" />
+      <input type="text" placeholder="Time" name="time" />
+      <button type="submit">Submit</button>
+    </form>
+    <h2>Tasks</h2>
+    <ul class="tasks">
+      <!-- using for loops, just like js -->
+      <% for(var i = 0 ; i < tasks.length; i++){ %>
+      <li class="task">
+        <span><%= tasks[i].name %></span>:
+        <span><%= tasks[i].time %></span>
+      </li>
+      <%}%>
+    </ul>
+
+    <div>
+      <h2>Prioritize Sleep</h2>
+      <p>SLEEP</p>
+      <button id="update-button">Sleep</button>
+    </div>
+    <div>
+      <h2>Forget Sleep</h2>
+      <p>
+        Deletes Sleep
+      </p>
+      <button id="delete-button">Delete</button>
+    </div>
+    <div id="message"></div>
+    <script src="/main.js"></script>
+  </body>
+</html>
