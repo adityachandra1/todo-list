@@ -7,3 +7,6 @@ a basic crud app made using Node.js, Express and MongoDB
 -read and update task from the database.
 
 -delete tasks from the database
+
+
+![Screenshot](todo-list-ss.png)
