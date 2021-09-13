@@ -6,16 +6,12 @@ const MongoClient = require('mongodb').MongoClient;
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
 app.use(bodyParser.json())
-// MongoClient.connect(connectionString, (err, client) => {
-// ... do something here
-// }))
+
 MongoClient.connect('mongodb+srv://aditya:aditya123@nodetutorial.3abll.mongodb.net/tutorials?retryWrites=true&w=majority')
     .then(client => {
         const db = client.db('todo-list');
-        const todos = db.collection('tasks');//this helps store a collection of things (similar to boxes in a room), make a collection director basically;
+        const todos = db.collection('tasks');
 
-        // POST is the CREATE operation.
-        // can be triggered through JS or a <form> element
         app.post('/tasks', (req, res) => {
             todos.insertOne(req.body)
                 .then(result => {
@@ -24,26 +20,15 @@ MongoClient.connect('mongodb+srv://aditya:aditya123@nodetutorial.3abll.mongodb.n
                 })
                 .catch(error => console.log(error));
         })
-        //READ and render with template engine 
+
         app.get('/', (req, res) => {
             const cursor = db.collection('tasks').find().toArray()
-                // But this cursor object contains all quotes from our database! It has a bunch of method that lets us get our data. For example, we can use toArray to convert the data into an array.
                 .then(results => {
                     res.render('index.ejs', { tasks: results })
                 })
                 .catch(error => console.error(error))
         })
-        // UPDATE using JS
-        //method to be used , find one and update 
-        // quotesCollection.findOneAndUpdate(
-        //   query,
-        //   update,
-        //   options
-        // )
-        // .then(result => {/* ... */ })
-        // .catch(error => console.error(error))
-        // query lets us filter the collection with key-value pairs. If we want to filter quotes to those written by Yoda, we can set name: 'Yoda' as a query
-        //update tells mongo waht to change
+
         app.put('/tasks', (req, res) => {
             todos.findOneAndUpdate(
                 { name: 'Code' },
@@ -63,14 +48,6 @@ MongoClient.connect('mongodb+srv://aditya:aditya123@nodetutorial.3abll.mongodb.n
                 .catch(error => console.error(error))
             console.log(req.body)
         })
-
-        //DELETE
-        // quotesCollection.deleteOne(
-        //     query,
-        //     options
-        //   )
-        //     .then(result => {/* ... */})
-        //     .catch(error => console.error(error))
         app.delete('/tasks', (req, res) => {
             todos.deleteOne(
                 { name: req.body.name },
@@ -102,5 +79,28 @@ app.listen(3000, function () {
 //     // res.send('Hello World');  //localhost: 3000 shows hello world now
 //     res.sendFile(__dirname + '/index.html'); // sends an html 
 // })
-
-
+// MongoClient.connect(connectionString, (err, client) => {
+// ... do something here
+// }))
+// POST is the CREATE operation.
+// can be triggered through JS or a <form> element
+//READ and render with template engine 
+// cursor object contains all quotes from our database! It has a bunch of method that lets us get our data. For example, we can use toArray to convert the data into an array.
+// UPDATE using JS
+        //method to be used , find one and update 
+        // quotesCollection.findOneAndUpdate(
+        //   query,
+        //   update,
+        //   options
+        // )
+        // .then(result => {/* ... */ })
+        // .catch(error => console.error(error))
+        // query lets us filter the collection with key-value pairs. If we want to filter quotes to those written by Yoda, we can set name: 'Yoda' as a query
+        //update tells mongo waht to change
+           //DELETE
+        // quotesCollection.deleteOne(
+        //     query,
+        //     options
+        //   )
+        //     .then(result => {/* ... */})
+        //     .catch(error => console.error(error))
